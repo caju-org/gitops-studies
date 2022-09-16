@@ -11,11 +11,6 @@ spec:
     repository: https://prometheus-community.github.io/helm-charts
     name: kube-prometheus-stack 
     version: 39.12.1
-  valuesFrom:
-  - configMapKeyRef:
-      name: prometheus-values
-      namespace: monitoring 
-      key: values.yaml
   values:
     grafana:
       adminPassword: cajurocks
