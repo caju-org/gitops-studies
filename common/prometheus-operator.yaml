@@ -1,0 +1,30 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus-operator 
+  namespace: monitoring 
+spec:
+  releaseName: prometheus-operator 
+  helmVersion: v3
+  chart:
+    repository: https://prometheus-community.github.io/helm-charts
+    name: kube-prometheus-stack 
+    version: 39.12.1
+  valuesFrom:
+  - configMapKeyRef:
+      name: prometheus-values
+      namespace: monitoring 
+      key: values.yaml
+  values:
+    grafana:
+      adminPassword: cajurocks
+      grafana.ini:
+        server:
+          domain: grafana.caju.rocks
+          root_url: https://grafana.caju.rocks
+      sidecar:
+        image:
+          repository: quay.io/kiwigrid/k8s-sidecar
+          tag: 1.19.2
+          sha: ""
