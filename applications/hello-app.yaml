@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/hello-app
-    repoURL: git@github.com:caju-org/infrastructure
+    path: charts/hello-app
+    repoURL: git@github.com:caju-org/gitops-studies
     targetRevision: main
     helm:
       releaseName: hello-app
