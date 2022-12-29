@@ -1,27 +1,38 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hello-app 
+  name: hello-app
   namespace: argocd
-  labels:
-    caju.rocks/environment: qa
 spec:
+  destination:
+    namespace: qa
+    server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: https://github.com/caju-org/infrastructure.git
-    targetRevision: HEAD
-    path: applications/hello-app 
-    chart: hello-app
+    path: applications/hello-app
+    repoURL: git@github.com:caju-org/infrastructure
+    targetRevision: main
     helm:
       releaseName: hello-app
-      values:
+      values: |
+        image:
+          repository: "gcr.io/google-samples/hello-app"
+          tag: "1.0"
+        service:
+          port: 8080
         ingress:
-          enable: true
-    kustomize:
-      namePrefix: qa-
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: qa 
-
+          enabled: true
+          className: nginx
+          hosts:
+            - host: hello-app.caju.local
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      port:
+                        number: 8080
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
