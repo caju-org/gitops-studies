@@ -27,18 +27,18 @@ spec:
             - host: hello-app.caju.local
               paths:
                 - path: /
-                  pathType: Exact 
-                  backend:
-                    service:
-                      name: hello-app
-                      port:
-                        number: 8080
-
-                - path: /admin
-                  pathType: Prefix
+                  pathType: Exact
                   backend:
                     service:
                       name: defaultbackend
+                      port:
+                        number: 80
+
+                - path: /hello
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: hello-app
                       port:
                         number: 8080
   syncPolicy:
