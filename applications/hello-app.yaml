@@ -32,7 +32,7 @@ spec:
             - host: hello-app.caju.local
               paths:
                 - path: /auth/
-                  pathType: Exact
+                  pathType: Prefix
                   backend:
                     service:
                       name: hello-app
