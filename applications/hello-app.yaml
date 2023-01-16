@@ -31,7 +31,14 @@ spec:
           hosts:
             - host: hello-app.caju.local
               paths:
-                - path: /auth/realms/master/protocol/openid-connect/token
+                - path: /auth/admin/master/console/
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: defaultBackend
+                      port:
+                        number: 80
+                - path: /
                   pathType: Prefix
                   backend:
                     service:
