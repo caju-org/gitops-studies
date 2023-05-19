@@ -9,14 +9,17 @@ spec:
     namespace: qa
     server: https://kubernetes.default.svc
   project: default
-  source:
-    path: charts/hello-app
-    repoURL: git@github.com:caju-org/gitops-studies
-    targetRevision: main
-    helm:
-      releaseName: hello-app
-      valuesFiles:
-        - values/hello-app.yaml
+  sources:
+    - repoURL: git@github.com:caju-org/gitops-studies
+      path: charts/hello-app
+      targetRevision: main
+      helm:
+        releaseName: hello-app
+        valueFiles:
+          - $values/qa/hello-app/values.yaml
+    - repoURL: 'https://github.com/caju-org/gitops-value-files.git'
+      targetRevision: main
+      ref: values
   syncPolicy:
     automated:
       prune: false
