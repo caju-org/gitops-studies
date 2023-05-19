@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,6 +16,7 @@ spec:
     helm:
       releaseName: hello-app
       values: |
+        replicaCount: 3
         image:
           repository: "gcr.io/google-samples/hello-app"
           tag: "2.0"
@@ -31,11 +33,11 @@ spec:
           hosts:
             - host: hello-app.caju.local
               paths:
-                - path: /auth/admin/master/console/
+                - path: /auth/admin/
                   pathType: Prefix
                   backend:
                     service:
-                      name: defaultBackend
+                      name: defaultbackend
                       port:
                         number: 80
                 - path: /
